@@ -12,13 +12,9 @@ class WorkplaceController extends Controller
 {
     public function index(Request $request)
     {
-        // Lấy số lượng phần tử trên mỗi trang từ request (mặc định là 10)
         $perPage = $request->input('per_page', 10);
-    
-        // Phân trang và load quan hệ 'rooms'
         $workplaces = Workplace::with('rooms')->paginate($perPage);
     
-        // Trả về dữ liệu dạng JSON
         return response()->json([
             'success' => true,
             'message' => 'sussess',

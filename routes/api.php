@@ -1,6 +1,8 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WorkplaceController;
@@ -9,6 +11,7 @@ use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\TaskImageController;
 use App\Http\Controllers\Api\TaskRoomController;
 use App\Http\Controllers\Api\AddressController;
+
 
 Route::get('/verify-token', function (Request $request) {
     $user = $request->user(); 
@@ -25,7 +28,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::prefix('admin')->group(function () {
         Route::apiResource('users', UserController::class);
         Route::apiResource('workplaces', WorkplaceController::class);
         Route::apiResource('rooms', RoomController::class);
@@ -37,12 +39,5 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('task-rooms', [TaskRoomController::class, 'store']);
         Route::delete('task-rooms/{id}', [TaskRoomController::class, 'destroy']);
 
-    });
-
-    Route::prefix('user')->group(function () {
-
-
-    });
-
-    Route::get('/addresses/{zipcode}', [AddressController::class, 'showByZipCode']);
+        Route::get('/addresses/{zipcode}', [AddressController::class, 'showByZipCode']);
 });
